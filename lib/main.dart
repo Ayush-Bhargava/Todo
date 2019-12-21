@@ -74,9 +74,21 @@ class _TodoListState extends State<TodoList> {
 
   // Build a single todo item
   Widget _buildTodoItem(String todoText, int index) {
-    return ListTile(
-      title: Text(todoText),
-      onTap: () => _promptRemoveTodoItem(index),
+    return Dismissible(
+      key: Key(todoText),
+      background: Container(
+        color: Colors.red,
+      ),
+      direction: DismissDirection.endToStart,
+      onDismissed: (direction) {
+        setState(() {
+          _todoItems.removeAt(index);
+        });
+      },
+      child: ListTile(
+        title: Text(todoText),
+        onTap: () => _promptRemoveTodoItem(index),
+      ),
     );
   }
 
